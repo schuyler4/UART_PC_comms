@@ -20,12 +20,11 @@
 
 #define TRANSMIT_DELAY 100
 
-#define ECHO_COMMAND_CHARACTER '0'
+#define ECHO_COMMAND_CHARACTER '1'
 
 int main(void)
 {
     setup_UART();
-    UART_transmit_string("RESET\n\r");
 
     while(1)
     {
@@ -46,7 +45,8 @@ int main(void)
 
 void echo(void)
 {
-    UART_transmit_string("START\n\r");
-    UART_transmit_string("ECHO\n\r");
-    UART_transmit_string("END\n\r");
+    _delay_ms(100);
+    UART_transmit_string("START\n");
+    UART_transmit_string("ECHO\n");
+    UART_transmit_string("END\n");
 }
