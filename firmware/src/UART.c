@@ -27,7 +27,7 @@ char* int_to_string(int number)
     return string;
 }
 
-// sets all the registers that are needed for UART communication
+// This function sets up all the functions that are needed for UART communication.
 void setup_UART(void)
 {
     // set baud rate 

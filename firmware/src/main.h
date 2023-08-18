@@ -3,5 +3,6 @@
 
 int main(void);
 void echo(void);
+void random_numbers(void);
 
 #endif

@@ -21,6 +21,12 @@
 #define TRANSMIT_DELAY 100
 
 #define ECHO_COMMAND_CHARACTER '1'
+#define RANDOM_NUMBERS_CHARACTER '2'
+
+#define RANDOM_NUMBERS_LENGTH 10
+
+uint8_t random_numbers1[RANDOM_NUMBERS_LENGTH] = {0, 1, 2, 3, 4, 5, 6, 7, 8, 9};
+uint8_t random_numbers2[RANDOM_NUMBERS_LENGTH] = {9, 8, 7, 6, 5, 4, 3, 2, 1, 0};
 
 int main(void)
 {
@@ -33,6 +39,9 @@ int main(void)
         {
             case ECHO_COMMAND_CHARACTER:
                 echo();
+                break;
+            case RANDOM_NUMBERS_CHARACTER:
+                random_numbers();
                 break;
             default:
                 break;
@@ -48,5 +57,35 @@ void echo(void)
     _delay_ms(100);
     UART_transmit_string("START\n");
     UART_transmit_string("ECHO\n");
+    UART_transmit_string("END\n");
+}
+
+void random_numbers(void)
+{
+    UART_transmit_string("START\n");
+    for(uint8_t i = 0; i < 2; i++)
+    {
+        if(i == 0)
+        {
+            UART_transmit_string("X\n");
+        }
+        else
+        {
+            UART_transmit_string("Y\n");
+        }
+
+        for(uint8_t j = 0; j < RANDOM_NUMBERS_LENGTH; j++)
+        {
+            if(i == 0)
+            {
+                UART_transmit_int(random_numbers1[j]);
+            }
+            else
+            {
+                UART_transmit_int(random_numbers2[j]);
+            }
+            UART_transmit_string("\n");
+        }
+    }
     UART_transmit_string("END\n");
 }
