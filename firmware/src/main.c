@@ -34,7 +34,7 @@ int main(void)
 
     while(1)
     {
-        uint8_t command = UART_getc();
+        uint8_t command = UART_receive_character();
         switch(command)
         {
             case ECHO_COMMAND_CHARACTER:
@@ -78,11 +78,11 @@ void random_numbers(void)
         {
             if(i == 0)
             {
-                UART_transmit_int(random_numbers1[j]);
+                UART_transmit_uint8_t(random_numbers1[j]);
             }
             else
             {
-                UART_transmit_int(random_numbers2[j]);
+                UART_transmit_uint8_t(random_numbers2[j]);
             }
             UART_transmit_string("\n");
         }

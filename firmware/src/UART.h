@@ -1,17 +1,21 @@
+//
+// FILENAME: UART.h
+//
+// description: this file contains the prototypes for the UART functions. 
+//
+// Written by: Marek Newton
+//
+
 #ifndef UART_H
 #define UART_H
 
-char* int_to_string(int number);
-// this function should be called before the main loop to set up the UART registers
+// This function should be called before any UART functions are used.
 void setup_UART(void);
 
-// Transmitting functions
 void UART_transmit_char(char data);
 void UART_transmit_string(char *string);
-void UART_transmit_int(int number);
-
-// Receiving functions
-char UART_getc(void);
-int UART_get_int(void);
+void UART_transmit_uint8_t(uint8_t number);
+void UART_transmit_uint16_t(uint16_t number);
+char UART_receive_character(void);
 
 #endif
