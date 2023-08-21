@@ -72,8 +72,8 @@ def read_serial_data(my_serial):
 
 # This function decodes the decoded binary integer. 
 def sanitize_integer(string):
-    cleaned_string = string.replace('\x00', '').replace('\n', '')  # Remove escape sequences
-    decoded_integer = int(cleaned_string)  # Convert the cleaned string to an integer
+    cleaned_string = string.replace('\x00', '').replace('\n', '')
+    decoded_integer = int(cleaned_string)
     return decoded_integer
 
 
@@ -137,12 +137,3 @@ def user_interface(my_serial):
             break
         else:
             print('Invalid command')
-
-
-my_serial = init_serial()
-
-if(my_serial == None):
-    exit()
-
-if __name__ == '__main__':
-    user_interface(my_serial)
