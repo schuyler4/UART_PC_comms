@@ -77,6 +77,7 @@ void UART_transmit_uint8_t(uint8_t number)
         uint8_t digit = number % INTEGER_BASE;
         number /= INTEGER_BASE;
         digit_stack[DIGIT_COUNT_8_BIT - i - 1] = digit;
+        i++;
     }
 
     uint8_t leading_zero = 1;
@@ -104,6 +105,7 @@ void UART_transmit_uint16_t(uint16_t number)
         uint8_t digit = number % INTEGER_BASE;
         number /= INTEGER_BASE;
         digit_stack[DIGIT_COUNT_8_BIT - i - 1] = digit;
+        i++;
     }
 
     uint8_t leading_zero = 1;

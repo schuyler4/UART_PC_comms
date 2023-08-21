@@ -1,7 +1,7 @@
 '''
 FILENAME: interface.py
 
-description: This file is code for that master that runs on a PC.
+description: This file is code for the master that runs on a PC.
 
 Written by: Marek Newton
 '''
@@ -103,7 +103,8 @@ def separate_data(data):
 
 # This function plots the random data for the user to see.
 def plot_data(x, y):
-    plt.plot(x, y)
+    plt.scatter(x, y)
+    plt.title('A Scatter Plot of the Numerical Data')
     plt.xlabel('X')
     plt.ylabel('Y')
     plt.show()
