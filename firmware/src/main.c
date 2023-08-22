@@ -31,7 +31,6 @@ uint8_t random_numbers2[RANDOM_NUMBERS_LENGTH] = {9, 8, 7, 6, 5, 4, 3, 2, 1, 0};
 int main(void)
 {
     setup_UART();
-    UART_transmit_uint8_t(122);
 
     while(1)
     {

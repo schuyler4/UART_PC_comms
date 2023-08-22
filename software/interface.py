@@ -1,7 +1,8 @@
 '''
 FILENAME: interface.py
 
-description: This file is code for the master that runs on a PC.
+description: This file is code for the master that runs on a PC and makes 
+requests to the slave microcontroller. 
 
 Written by: Marek Newton
 '''
@@ -10,16 +11,11 @@ import serial
 import time
 import matplotlib.pyplot as plt
 
-baudrate = 9600
-serial_port = 'COM6'
-no_data_error = 10
-
-data_start_command = 'START'
-data_end_command = 'END'
-
-
-# This function sets of the serial object.
+# This function sets up the serial object.
 def init_serial():
+    baudrate = 9600
+    serial_port = 'COM6'
+
     try:
         my_serial = serial.Serial()
         my_serial.port = serial_port
@@ -30,9 +26,11 @@ def init_serial():
         # For some reason, a delay is required before flushing the serial buffer.
         time.sleep(1)
         my_serial.flush()
+        # Another delay is required after flushing the serial buffer before using the serial port.
+        time.sleep(1)
         return my_serial
     except:
-        print('Serial port could not be opened')
+        print('Serial port could not be opened.')
         return None
 
 
@@ -42,7 +40,12 @@ def read_serial_data(my_serial):
     received_data = []
     logging_data = False
 
-    while True:
+    data_start_command = 'START'
+    data_end_command = 'END'
+
+    no_data_error = 10
+
+    while True: 
         try:
             data_str = my_serial.readline().decode('utf8')
 
@@ -51,7 +54,7 @@ def read_serial_data(my_serial):
                 no_data_count += 1
 
                 if(no_data_count > no_data_error):
-                    print('No data received')
+                    print('No data received.')
                     break
             elif(data_end_command in data_str):
                 logging_data = False
@@ -110,29 +113,40 @@ def plot_data(x, y):
     plt.show()
 
 
+def echo(my_serial):
+    my_serial.write(b'1')
+    time.sleep(0.1)
+    data = read_serial_data(my_serial)
+
+    if(len(data) > 0):
+        return data[0][:-1]
+    else:
+        return None
+
+
+def random_numbers(my_serial):
+    my_serial.write(b'2')
+    time.sleep(0.1)
+    data = read_serial_data(my_serial)
+
+    if(len(data) > 0):
+        # Print the data without the newline character.
+        return separate_data(data)
+    else:
+        return None
+
+
 # This function runs the basic command line user interface.
 def user_interface(my_serial):
     while True:
         user_input = input('Enter a command: ')
         
         if(user_input == 'echo'):
-            my_serial.write(b'1')
-            time.sleep(0.1)
-            data = read_serial_data(my_serial)
-
-            if(len(data) > 0):
-                # Print the data without the newline character.
-                print(data[0][:-1])
+            print(echo(my_serial))
 
         elif(user_input == 'random'):
-            my_serial.write(b'2')
-            time.sleep(0.1)
-            data = read_serial_data(my_serial)
-
-            if(len(data) > 0):
-                # Print the data without the newline character.
-                x, y = separate_data(data)
-                plot_data(x, y)
+            x, y = random_numbers(my_serial)
+            plot_data(x, y)
 
         elif(user_input == 'exit'):
             break

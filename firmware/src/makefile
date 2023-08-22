@@ -1,4 +1,4 @@
-# This make file uploads pure C programs to an arduino
+# This make file uploads pure C programs to an Arduino
 
 # the frequency of the arduino board
 F_CPU = 8000000UL

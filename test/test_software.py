@@ -20,5 +20,17 @@ def test_sanitize_integer():
         print('sanitize_integer test failed')
         return False
 
+
 def test_separate_data():
-    pass
+    data = ['\x00X\n', '\x0082\n', '\x002\n', '\x00Y\n', '\x00233\n', '\x00200\n']
+
+    x, y = separate_data(data)
+
+    try:
+        assert x == [82, 2]
+        assert y == [233, 200]
+        print('separate_data test passed')
+        return True
+    except:
+        print('separate_data test failed')
+        return False
