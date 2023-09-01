@@ -89,6 +89,10 @@ void UART_transmit_uint8_t(uint8_t number)
         {
             continue;
         }
+        else if(digit_stack[i] != 0)
+        {
+            leading_zero = 0;
+        }
 
         UART_transmit_char(digit_to_character(digit_stack[i]));
     }
@@ -113,9 +117,13 @@ void UART_transmit_uint16_t(uint16_t number)
     for(i = 0; i < DIGIT_COUNT_16_BIT; i++)
     {
         // Don't transmit leading zeros.
-        if(digit_stack[i] == 0 && leading_zero && i != DIGIT_COUNT_8_BIT - 1)
+        if(digit_stack[i] == 0 && leading_zero && i != DIGIT_COUNT_16_BIT - 1)
         {
             continue;
+        }
+        else if(digit_stack[i] != 0)
+        {
+            leading_zero = 0;
         }
 
         UART_transmit_char(digit_to_character(digit_stack[i]));
