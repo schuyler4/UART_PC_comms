@@ -14,7 +14,7 @@ import matplotlib.pyplot as plt
 # This function sets up the serial object.
 def init_serial():
     baudrate = 9600
-    serial_port = 'COM6'
+    serial_port = '/dev/ttyUSB0'
 
     try:
         my_serial = serial.Serial()
@@ -73,7 +73,7 @@ def read_serial_data(my_serial):
     return received_data
 
 
-# This function decodes the decoded binary integer. 
+# This function removes the null character and newline that is left in the decoded string 
 def sanitize_integer(string):
     cleaned_string = string.replace('\x00', '').replace('\n', '')
     decoded_integer = int(cleaned_string)

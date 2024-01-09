@@ -1,10 +1,10 @@
 # This make file uploads pure C programs to an Arduino
 
 # the frequency of the arduino board
-F_CPU = 8000000UL
+F_CPU = 16000000UL
 
 # the port that the board is connected to
-PORT = COM6
+PORT = /dev/ttyUSB0
 
 # the directory where all the compiled files go
 BIN_DIRECTORY = ../bin
@@ -31,7 +31,7 @@ make: main.c
 	avr-objcopy -j .text -j .data -O ihex $(BIN_DIRECTORY)/$(OUTPUT_FILE).o $(BIN_DIRECTORY)/program.hex
 	@echo \n
 	#upload program
-	avrdude -F -V -v -c arduino -p ATMEGA328P -P ${PORT} -b 57600 -U flash:w:$(BIN_DIRECTORY)/$(OUTPUT_FILE).hex
+	avrdude -F -V -v -c arduino -p ATMEGA328P -P ${PORT} -b 115200 -U flash:w:$(BIN_DIRECTORY)/$(OUTPUT_FILE).hex
 
 compile:
 	@echo \n
